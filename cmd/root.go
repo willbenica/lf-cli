@@ -68,7 +68,6 @@ var rootCmd = &cobra.Command{
 	Long: `Get leadfeeder data from a specific API endpoint and push to a local file (JSON).
 For ease of use create a config file under $HOME/.config/lf-cli/.lf-cli.yaml
 or under $HOME/.lf-cli.yaml with the following
-  lf-url:  "my.leadfeeder.me"
   account: "myAccountID"
   token:   "myApiToken"
 	`,
