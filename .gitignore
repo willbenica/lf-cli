@@ -1,0 +1,37 @@
+# lf-cli specific
+
+# Test folder for development
+tests/
+#build artifacts
+build/macos/
+
+# general go files
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+# Test binary, built with `go test -c`
+*.test
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+
+# macos specifics
+.DS_Store
+
+# Editor specific files
+# for jetbrains IDEs
+.idea/
+# for vscode
+.vscode/
+
+# Direnv files
+.direnv
+.envrc
+
+# Ignore the symlinked config file
+.lf-cli.yaml

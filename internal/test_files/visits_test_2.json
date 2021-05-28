@@ -1,0 +1,101 @@
+{
+  "data": [
+    {
+      "id": "visitID_1",
+      "type": "visits",
+      "attributes": {
+        "source": "Google",
+        "medium": "organic",
+        "referring_url": null,
+        "page_depth": 4,
+        "visit_route": [
+          {
+            "hostname": "www.myCompany.com",
+            "page_path": "/myCompany/",
+            "previous_page_path": "(entrance)",
+            "time_on_page": 36,
+            "page_title": "My Company",
+            "page_url": "http://www.myCompany.com/myCompany/",
+            "display_page_name": "http://www.myCompany.com/myCompany/"
+          },
+          {
+            "hostname": "www.myCompany.com",
+            "page_path": "/myCompany/myCompany/",
+            "previous_page_path": "/myCompany/",
+            "time_on_page": 15,
+            "page_title": "myCompany",
+            "page_url": "http://www.myCompany.com/myCompany/myCompany/",
+            "display_page_name": "http://www.myCompany.com/myCompany/myCompany/"
+          },
+          {
+            "hostname": "www.myCompany.com",
+            "page_path": "/coolSolutions/",
+            "previous_page_path": "/myCompany/myCompany/",
+            "time_on_page": 58,
+            "page_title": "MyCompany - Solutions",
+            "page_url": "http://www.myCompany.com/data-lake-optimization/",
+            "display_page_name": "http://www.datameer.com/data-lake-optimization/"
+          },
+          {
+            "hostname": "www.myCompany.com",
+            "page_path": "/product/",
+            "previous_page_path": "/coolSolutions/",
+            "time_on_page": 0,
+            "page_title": "MyCompany - Product",
+            "page_url": "http://www.myCompany.com/product/",
+            "display_page_name": "http://www.myCompany.com/product/"
+          }
+        ],
+        "keyword": null,
+        "visit_length": 109,
+        "started_at": "2021-05-24T13:40:03.071Z",
+        "campaign": null,
+        "query_term": null,
+        "lf_client_id": "LF1.cool.Id",
+        "ga_client_ids": [
+          "ga.clientId"
+        ],
+        "date": "2021-05-24",
+        "hour": 6,
+        "lead_id": "myLeadID_1"
+      }
+    },
+    {
+      "id": "visitID_2",
+      "type": "visits",
+      "attributes": {
+        "source": "Google",
+        "medium": "organic",
+        "referring_url": null,
+        "page_depth": 1,
+        "visit_route": [
+          {
+            "hostname": "www.myCompany.com",
+            "page_path": "/myCompany/",
+            "previous_page_path": "(entrance)",
+            "time_on_page": 0,
+            "page_title": "My Company",
+            "page_url": "http://www.myCompany.com/myCompany/",
+            "display_page_name": "http://www.myCompany.com/myCompany/"
+          }
+        ],
+        "keyword": null,
+        "visit_length": 0,
+        "started_at": "2021-05-24T13:20:43.949Z",
+        "campaign": null,
+        "query_term": null,
+        "lf_client_id": "LF1.cool.ID.2",
+        "ga_client_ids": [
+          "ga.clientID_2"
+        ],
+        "date": "2021-05-24",
+        "hour": 6,
+        "lead_id": "myLeadID_2"
+      }
+    }
+  ],
+  "links": {
+    "self": "https://me.leadfeeder.com/accounts/123456/visits?end_date=2021-05-25&page%5Bnumber%5D=2&page%5Bsize%5D=2&start_date=2021-01-01",
+    "first": "https://me.leadfeeder.com/accounts/123456/visits?end_date=2021-05-25&page%5Bnumber%5D=1&page%5Bsize%5D=2&start_date=2021-01-01"
+  }
+}

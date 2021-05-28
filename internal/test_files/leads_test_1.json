@@ -1,0 +1,107 @@
+{
+  "data": [
+    {
+      "id": "myLeadId",
+      "type": "leads",
+      "attributes": {
+        "facebook_url": "",
+        "status": "new",
+        "twitter_handle": "",
+        "first_visit_date": "2021-05-23",
+        "last_visit_date": "2021-05-25",
+        "linkedin_url": "",
+        "name": "myCompany",
+        "website_url": "",
+        "business_id": "",
+        "revenue": "",
+        "assignee": "",
+        "emailed_to": "",
+        "view_in_leadfeeder": "https://me.leadfeeder.com/link/lf_id",
+        "industry": "N/A",
+        "phone": "",
+        "crm_lead_id": "",
+        "crm_organization_id": "",
+        "employee_count": 0,
+        "tags": [],
+        "logo_url": "",
+        "visits": 1,
+        "quality": 1
+      },
+      "relationships": {
+        "location": {
+          "data": {
+            "id": "myLocationId",
+            "type": "locations"
+          }
+        }
+      }
+    },
+    {
+      "id": "myLeadId2",
+      "type": "leads",
+      "attributes": {
+        "facebook_url": "",
+        "status": "new",
+        "twitter_handle": "",
+        "first_visit_date": "2021-05-23",
+        "last_visit_date": "2021-05-25",
+        "linkedin_url": "",
+        "name": "myCompany2",
+        "website_url": "",
+        "business_id": "",
+        "revenue": "",
+        "assignee": "",
+        "emailed_to": "",
+        "view_in_leadfeeder": "https://me.leadfeeder.com/link/lf_id2",
+        "industry": "N/A",
+        "phone": "",
+        "crm_lead_id": "",
+        "crm_organization_id": "",
+        "employee_count": 0,
+        "tags": [],
+        "logo_url": "",
+        "visits": 1,
+        "quality": 1
+      },
+      "relationships": {
+        "location": {
+          "data": {
+            "id": "myLocationId2",
+            "type": "locations"
+          }
+        }
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "myLocationId",
+      "type": "locations",
+      "attributes": {
+        "country": "Germany",
+        "country_code": "DE",
+        "region": "Saxony",
+        "region_code": "",
+        "city": "Dresden",
+        "state_code": ""
+      }
+    },
+    {
+      "id": "myLocationId2",
+      "type": "locations",
+      "attributes": {
+        "country": "Germany",
+        "country_code": "DE",
+        "region": "Saxony",
+        "region_code": "",
+        "city": "Dresden",
+        "state_code": ""
+      }
+    }
+  ],
+  "links": {
+    "self": "https://me.leadfeeder.com/accounts/123456/leads?end_date=2021-05-24&page%5Bnumber%5D=1&page%5Bsize%5D=2&start_date=2021-01-01",
+    "next": "https://me.leadfeeder.com/accounts/123456/leads?end_date=2021-05-24&page%5Bnumber%5D=2&page%5Bsize%5D=2&start_date=2021-01-01",
+    "last": "https://me.leadfeeder.com/accounts/123456/leads?end_date=2021-05-24&page%5Bnumber%5D=25&page%5Bsize%5D=2&start_date=2021-01-01"
+  }
+}
