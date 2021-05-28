@@ -23,7 +23,7 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
-	"gitlab.com/pgetal/lf-cli/internal"
+	"github.com/willbenica/lf-cli/internal"
 	"go.uber.org/zap"
 )
 

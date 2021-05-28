@@ -1,4 +1,4 @@
-module gitlab.com/pgetal/lf-cli
+module github.com/willbenica/lf-cli
 
 go 1.15
 

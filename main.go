@@ -17,7 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 package main
 
-import "gitlab.com/pgetal/lf-cli/cmd"
+import "github.com/willbenica/lf-cli/cmd"
 
 func main() {
 	cmd.Execute()
