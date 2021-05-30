@@ -58,32 +58,30 @@ https://api.leadfeeder.com/accounts/...
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		UsedFlags := internal.Flags{
-			All:        All,
-			StartDate:  internal.TodayOrDate(StartDate),
-			EndDate:    internal.TodayOrDate(EndDate),
-			PageSize:   PageSize,
-			PageNumber: PageNumber,
-			BaseURL:    BaseURL,
-			Token:      Token,
-			AccountID:  AccountID,
-			Verbose:    Verbose,
+		flags := internal.Flags{
+			StartDate:  internal.TodayOrDate(startDate),
+			EndDate:    internal.TodayOrDate(endDate),
+			PageSize:   pageSize,
+			PageNumber: pageNumber,
+			BaseURL:    baseURL,
+			Token:      token,
+			AccountID:  accountID,
 		}
 
 		// Raise loglevel to Error if use is printing response to the console
-		if UsedFlags.All || len(Folder) > 0 {
+		if !all || len(Folder) > 0 || quiet {
 			logConfig.Level.SetLevel(zap.ErrorLevel)
 			internal.LogConfig.Level.SetLevel(zap.ErrorLevel)
 		}
 		//Check if user wants expanded log output and if necessary override the above setting
-		if UsedFlags.Verbose {
+		if verbose {
 			logConfig.Level.SetLevel(zap.DebugLevel)
 			internal.LogConfig.Level.SetLevel(zap.DebugLevel)
 		}
 
-		if !UsedFlags.All {
+		if !all {
 			logger.Debug("Retrieving ONLY one response, not looping to the last page")
-			data, err := internal.GetEndPointData(args[0], BaseURL, Token, AccountID, UsedFlags.StartDate, UsedFlags.EndDate, UsedFlags.PageSize, UsedFlags.PageNumber)
+			data, err := internal.GetEndPointData(args[0], baseURL, token, accountID, flags.StartDate, flags.EndDate, flags.PageSize, flags.PageNumber)
 			if err != nil {
 				return err
 			}
@@ -97,11 +95,11 @@ https://api.leadfeeder.com/accounts/...
 					epld, eplc, _, _ := data.GetData()
 					ld.Data = epld
 					lc.Data = eplc
-					errWrite := internal.WriteToFile(Folder, internal.CreateFileName("leads", UsedFlags), ld.GetAllData())
+					errWrite := internal.WriteToFile(Folder, internal.CreateFileName("leads", flags), ld.GetAllData())
 					if errWrite != nil {
 						logger.Error("failed to write to file", zap.Error(errWrite))
 					}
-					errLoc := internal.WriteToFile(Folder, internal.CreateFileName("locations", UsedFlags), lc.GetAllData())
+					errLoc := internal.WriteToFile(Folder, internal.CreateFileName("locations", flags), lc.GetAllData())
 					if errLoc != nil {
 						logger.Error("failed to write to file", zap.Error(errLoc))
 					}
@@ -109,7 +107,7 @@ https://api.leadfeeder.com/accounts/...
 					var v internal.Visits
 					_, _, epv, _ := data.GetData()
 					v.Data = epv
-					errWrite := internal.WriteToFile(Folder, internal.CreateFileName("visits", UsedFlags), v.GetAllData())
+					errWrite := internal.WriteToFile(Folder, internal.CreateFileName("visits", flags), v.GetAllData())
 					if errWrite != nil {
 						logger.Error("failed to write to file", zap.Error(errWrite))
 					}
@@ -139,7 +137,7 @@ https://api.leadfeeder.com/accounts/...
 		// Can be removed after implementation
 		logger.Info("Getting All Data")
 
-		baseData, err := internal.GetEndPointData(args[0], BaseURL, Token, AccountID, internal.TodayOrDate(StartDate), internal.TodayOrDate(EndDate), PageSize, PageNumber)
+		baseData, err := internal.GetEndPointData(args[0], baseURL, token, accountID, internal.TodayOrDate(startDate), internal.TodayOrDate(endDate), pageSize, pageNumber)
 		if err != nil {
 			return err
 		}
@@ -152,7 +150,7 @@ https://api.leadfeeder.com/accounts/...
 				logger.Debug("Starting to loop through LeadData & LocationData")
 				var allLeads internal.Leads
 
-				loopedLeads, loopedLocations, err := internal.LoopThroughLeadsData(leads, locations, PageNumber+1, lastpage, UsedFlags)
+				loopedLeads, loopedLocations, err := internal.LoopThroughLeadsData(leads, locations, pageNumber+1, lastpage, flags)
 				if err != nil {
 					return err
 				}
@@ -160,7 +158,7 @@ https://api.leadfeeder.com/accounts/...
 
 				allLeads.Data = loopedLeads
 
-				leadsFile := internal.CreateFileName("leads", UsedFlags)
+				leadsFile := internal.CreateFileName("leads", flags)
 				logger.Info("Writing to file:", zap.String("file", leadsFile))
 				errLeads := internal.WriteToFile(Folder, leadsFile, allLeads.GetAllData())
 				if errLeads != nil {
@@ -170,7 +168,7 @@ https://api.leadfeeder.com/accounts/...
 
 				var allLocations internal.Locations
 				allLocations.Data = loopedLocations
-				locationsFile := internal.CreateFileName("locations", UsedFlags)
+				locationsFile := internal.CreateFileName("locations", flags)
 				logger.Info("Writing to file", zap.String("file", locationsFile))
 				errLocations := internal.WriteToFile(Folder, locationsFile, allLocations.GetAllData())
 				if errLocations != nil {
@@ -184,12 +182,12 @@ https://api.leadfeeder.com/accounts/...
 				var v internal.Visits
 				v.Data = data
 				logger.Debug("Starting to loop through VisitData")
-				loopedVisits, err := internal.LoopThroughVistsData(v, PageNumber+1, lastpage, UsedFlags)
+				loopedVisits, err := internal.LoopThroughVistsData(v, pageNumber+1, lastpage, flags)
 				if err != nil {
 					return err
 				}
 				logger.Debug("Finished looping through VisitData")
-				visitsFile := internal.CreateFileName("visits", UsedFlags)
+				visitsFile := internal.CreateFileName("visits", flags)
 				logger.Info("Writing to file", zap.String("file", visitsFile))
 				errLocations := internal.WriteToFile(Folder, visitsFile, loopedVisits.GetAllData())
 				if errLocations != nil {
@@ -219,9 +217,9 @@ func init() {
 
 	getCmd.Flags().StringVarP(&Folder, "folder", "f", "", "NEEDS IMPROVEMENT: Folder where data should be written")
 	getCmd.Flags().MarkHidden("folder") // Marking this as hidden, so that it's not used
-	getCmd.Flags().StringVarP(&StartDate, "start-date", "s", "today", "Start of the time period to return data. Use YYYY-MM-DD or today")
-	getCmd.Flags().StringVarP(&EndDate, "end-date", "e", "today", "End of the time period to return data. Use YYYY-MM-DD or today")
-	getCmd.Flags().IntVarP(&PageSize, "page-size", "z", 100, "Number of results to return per page, 1-100")
-	getCmd.Flags().IntVarP(&PageNumber, "page-number", "n", 1, "Page to retrieve")
-	getCmd.Flags().BoolVarP(&All, "get-all", "a", false, "Get all data for this endpoint - loop from start to last page")
+	getCmd.Flags().StringVarP(&startDate, "start-date", "s", "today", "Start of the time period to return data. Use YYYY-MM-DD or today")
+	getCmd.Flags().StringVarP(&endDate, "end-date", "e", "today", "End of the time period to return data. Use YYYY-MM-DD or today")
+	getCmd.Flags().IntVarP(&pageSize, "page-size", "z", 100, "Number of results to return per page, 1-100")
+	getCmd.Flags().IntVarP(&pageNumber, "page-number", "n", 1, "Page to retrieve")
+	getCmd.Flags().BoolVarP(&all, "get-all", "a", false, "Get all data for this endpoint - loop from start to last page")
 }

@@ -34,31 +34,33 @@ var (
 	logger    *zap.Logger
 	logConfig *zap.Config
 
-	// Use this to enusre we always know where the script is running
-	DirWhereScriptStarted string
-
 	cfgFile string
-	// BaseURL is used to form all requests
-	BaseURL string
-	// Token is used to provide authentication for users - created in the lf UI
-	Token string
-	// AccountID let's leadfeeder know which account the user would like to access
-	AccountID string
-	// Verbose increases the log level
-	Verbose bool
+	// baseURL is used to form all requests
+	baseURL string
+	// token is used to provide authentication for users - created in the lf UI
+	token string
+	// accountID let's leadfeeder know which account the user would like to access
+	accountID string
+
+	// Control variables
+
+	// verbose increases the log level
+	verbose bool
+	// quiet prevents lf-cli from outputting logs
+	quiet bool
 
 	// The variables below are used in sub commands!
 
-	// All determines if we should loop through to the last page automatically
-	All bool
-	// StartDate is the start the date to retrun leads - YYYY-MM-DD
-	StartDate string
-	// EndDate is the end the date to retrun leads - YYYY-MM-DD
-	EndDate string
-	// PageSize is the number of results to retrun per call (needs to be between 1-100)
-	PageSize int
-	// PageNumber is based off the number of results (default is 1)
-	PageNumber int
+	// all determines if we should loop through to the last page automatically
+	all bool
+	// startDate is the start the date to retrun leads - YYYY-MM-DD
+	startDate string
+	// endDate is the end the date to retrun leads - YYYY-MM-DD
+	endDate string
+	// pageSize is the number of results to retrun per call (needs to be between 1-100)
+	pageSize int
+	// pageNumber is based off the number of results (default is 1)
+	pageNumber int
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -98,14 +100,13 @@ func init() {
 	rootCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "path to a config file (default is $HOME/.config/lf-cli/.lf-cli.yaml)")
-	rootCmd.PersistentFlags().StringVarP(&BaseURL, "lf-url", "", "https://api.leadfeeder.com", "leadfeeder URL")
-	rootCmd.PersistentFlags().StringVarP(&AccountID, "accountID", "", "", "Account for which data should be accessed")
-	rootCmd.PersistentFlags().StringVarP(&Token, "token", "", "", "API token used to access lf")
-	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "Increases loglevel to DEBUG for trouble shooting.")
+	rootCmd.PersistentFlags().StringVarP(&baseURL, "lf-url", "", "https://api.leadfeeder.com", "leadfeeder URL")
+	rootCmd.PersistentFlags().StringVarP(&accountID, "accountID", "", "", "Account for which data should be accessed")
+	rootCmd.PersistentFlags().StringVarP(&token, "token", "", "", "API token used to access lf")
+	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "Increases loglevel to DEBUG for trouble shooting.")
+	rootCmd.PersistentFlags().BoolVarP(&quiet, "quiet", "q", false, "Surpress log output - '-v > -q'")
 
 	cobra.OnInitialize(initConfig)
-
-	DirWhereScriptStarted, _ = os.Getwd()
 
 	// Initalize logging and apply loglevel, etc
 	logger, logConfig = internal.InitLogger()
@@ -134,14 +135,14 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		// fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
-		if flagNotSet(BaseURL) {
-			BaseURL = viper.GetString("lf-url")
+		if flagNotSet(baseURL) {
+			baseURL = viper.GetString("lf-url")
 		}
-		if flagNotSet(Token) {
-			Token = viper.GetString("token")
+		if flagNotSet(token) {
+			token = viper.GetString("token")
 		}
-		if flagNotSet(AccountID) {
-			AccountID = viper.GetString("account")
+		if flagNotSet(accountID) {
+			accountID = viper.GetString("account")
 		}
 	}
 }

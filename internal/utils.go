@@ -207,7 +207,6 @@ func TodayOrDate(possibleDate string) string {
 }
 
 type Flags struct {
-	All        bool
 	StartDate  string
 	EndDate    string
 	PageSize   int
@@ -215,5 +214,4 @@ type Flags struct {
 	BaseURL    string
 	Token      string
 	AccountID  string
-	Verbose    bool
 }
