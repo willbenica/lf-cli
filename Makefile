@@ -2,10 +2,16 @@ MKFILE_DIR      :=  $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 .DEFAULT_GOAL   :=  help
 SHELL           :=  /bin/bash
 MAKEFLAGS += --no-print-directory
+PLATFROM := $(go env GOOS)
 
 .PHONY: build
 build: ## run go build and go install
-	@go build -v -o build/macos/lf-cli && go install
+	@go build -v -o build/lf-cli && go install
+
+.PHONY: build/all
+build/all: ## Run `go build` to create binaries for different OS
+	@export GOOS=linux; export GOARCH=amd64; go build -v -o build/linux/lf-cli_linux_amd64
+	@export GOOS=darwin; export GOARCH=amd64; go build -v -o build/macos/lf-cli_macos_amd64
 
 .PHONY: test
 test: ## run tests

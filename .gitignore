@@ -3,7 +3,7 @@
 # Test folder for development
 tests/
 #build artifacts
-build/macos/
+build/
 
 # general go files
 # Binaries for programs and plugins
