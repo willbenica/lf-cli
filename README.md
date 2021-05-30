@@ -27,7 +27,11 @@ Below are the steps to install (tested only with MacOS BigSur)
 
 ### Using a Pre-Built Package
 
-TODO: This still needs to be figured out `¯\_(ツ)_/¯`
+For linux or macOS users:
+
+* Run `go get github.com/willbenica/lf-cli`
+
+Our download the release binary.
 
 ## Creating a lf-cli.yaml configuration file
 
