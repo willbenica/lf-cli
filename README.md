@@ -21,7 +21,7 @@ Below are the steps to install (tested only with MacOS BigSur)
 
 #### Requirements
 
-* Go version 1.15+
+* Go version 1.16+
 * Leadfeeder account ID (6-digit number)
 * Leadfeeder API token
 
